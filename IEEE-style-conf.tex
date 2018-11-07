@@ -1,0 +1,665 @@
+\documentclass[10pt,conference,a4paper,onecolumn] {IEEEtran}
+\usepackage{multicol}
+\usepackage{graphicx}
+%\usepackage{epic}
+%\usepackage{figsize}
+\usepackage{float}
+\usepackage{hyperref}
+%\usepackage[section]{placeins}
+\usepackage{cite}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+%\usepackage{bera}% optional: just to have a nice mono-spaced font
+\usepackage{listings}
+%\usepackage{xcolor}
+\usepackage{setspace}
+\usepackage{bibspacing}
+\usepackage{float}
+\usepackage{subfig}
+\usepackage{caption}
+\usepackage{multirow}
+
+\usepackage{tabu}
+\usepackage{longtable}
+\usepackage[table]{xcolor}
+
+\usepackage{tabularx}
+
+\definecolor{green}{HTML}{66FF66}
+\definecolor{myGreen}{HTML}{009900}
+
+\renewcommand{\familydefault}{\sfdefault}
+\renewcommand{\arraystretch}{1.5}
+
+\definecolor{tableHeader}{RGB}{211, 47, 47}
+\definecolor{tableLineOne}{RGB}{245, 245, 245}
+\definecolor{tableLineTwo}{RGB}{224, 224, 224}
+
+\newcommand{\tableHeaderStyle}{
+    \rowfont{\leavevmode\color{white}\bfseries}
+    \rowcolor{tableHeader}
+}
+
+\usepackage{siunitx} % Required for alignment
+
+\sisetup{
+  round-mode          = places, % Rounds numbers
+  round-precision     = 2, % to 2 places
+}
+
+\setlength{\bibitemsep}{.2\baselineskip plus .05\baselineskip minus .05\baselineskip}
+
+
+\usepackage{c/style}
+
+\setstretch{1}
+
+\usepackage{listingsutf8}
+
+\colorlet{punct}{red!60!black}
+\definecolor{background}{HTML}{EEEEEE}
+\definecolor{delim}{RGB}{20,105,176}
+\colorlet{numb}{magenta!60!black}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+\definecolor{gray}{rgb}{0.4,0.4,0.4}
+\definecolor{darkblue}{rgb}{0.0,0.0,0.6}
+\definecolor{lightblue}{rgb}{0.0,0.0,0.9}
+\definecolor{cyan}{rgb}{0.0,0.6,0.6}
+\definecolor{darkred}{rgb}{0.6,0.0,0.0}
+
+\definecolor{newblue}{RGB}{20,105,176}
+
+\lstset{basicstyle=\ttfamily,
+  showstringspaces=false,
+  commentstyle=\color{red},
+  keywordstyle=\color{blue},
+  inputencoding=utf8,
+  extendedchars=true
+}
+
+\lstdefinelanguage{docker}{
+  keywords={FROM, RUN, COPY, ADD, ENTRYPOINT, CMD,  ENV, WORKDIR, EXPOSE, LABEL, USER, VOLUME, STOPSIGNAL, ONBUILD, MAINTAINER},
+  basicstyle=\footnotesize\normalfont\ttfamily,
+  keywordstyle=\color{delim},
+  identifierstyle=\color{black},
+  numbers=left,
+  numberstyle=\scriptsize,
+  stepnumber=1,
+  numbersep=8pt,
+  sensitive=false,
+  comment=[l]{\#},
+  commentstyle=\color{purple}\ttfamily,
+  stringstyle=\color{red}\ttfamily,
+  frame=lines,
+  backgroundcolor=\color{background},
+  morestring=[b]',
+  morestring=[b]"
+}
+
+\lstdefinelanguage{docker-compose}{
+  keywords={image, environment, ports, container_name, ports, volumes, links},
+  basicstyle=\footnotesize\normalfont\ttfamily,
+  keywordstyle=\color{delim}\bfseries,
+  identifierstyle=\color{black},
+  numbers=left,
+  numberstyle=\scriptsize,
+  stepnumber=1,
+  sensitive=false,
+  comment=[l]{\#},
+  commentstyle=\color{purple}\ttfamily,
+  stringstyle=\color{red}\ttfamily,
+  morestring=[b]',
+  morestring=[b]"
+}
+
+\lstdefinelanguage{docker-compose-2}{
+  keywords={version, volumes, services},
+  basicstyle=\footnotesize\normalfont\ttfamily,
+  keywordstyle=\color{delim}\bfseries,
+  keywords=[2]{image, environment, ports, container_name, ports, links, build},
+  keywordstyle=[2]\color{olive}\bfseries,
+  identifierstyle=\color{black},
+  numbers=left,
+  numberstyle=\scriptsize,
+  stepnumber=1,
+  sensitive=false,
+  comment=[l]{\#},
+  commentstyle=\color{purple}\ttfamily,
+  stringstyle=\color{red}\ttfamily,
+  morestring=[b]',
+  morestring=[b]"
+}
+
+\lstdefinelanguage{docker-compose-3}{
+  keywords={version, volumes, services},
+  basicstyle=\footnotesize\normalfont\ttfamily,
+  keywordstyle=\color{delim},
+  keywords=[2]{image, environment, ports, container_name, ports, links, build},
+  keywordstyle=[2]\color{olive},
+  identifierstyle=\color{black},
+  numbers=left,
+  numberstyle=\scriptsize,
+  stepnumber=1,
+  sensitive=false,
+  comment=[l]{\#},
+  commentstyle=\color{purple}\ttfamily,
+  stringstyle=\color{red}\ttfamily,
+  backgroundcolor=\color{background},
+  morestring=[b]',
+  morestring=[b]"
+}
+
+\lstdefinelanguage{json}{
+    basicstyle=\footnotesize \normalfont\ttfamily,
+    numbers=left,
+    numberstyle=\scriptsize,
+    stepnumber=1,
+    numbersep=8pt,
+    showstringspaces=false,
+    breaklines=true,
+    frame=lines,
+    backgroundcolor=\color{background},
+    literate=
+     *{:}{{{\color{punct}{:}}}}{1}
+      {,}{{{\color{punct}{,}}}}{1}
+      {\{}{{{\color{delim}{\{}}}}{1}
+      {\}}{{{\color{delim}{\}}}}}{1}
+      {[}{{{\color{delim}{[}}}}{1}
+      {]}{{{\color{delim}{]}}}}{1}
+}
+
+
+\lstset{
+  basicstyle=\ttfamily\footnotesize,
+  columns=fullflexible,
+  showstringspaces=false,
+  numbers=left,                   % where to put the line-numbers
+  numberstyle=\tiny\color{gray},  % the style that is used for the line-numbers
+  stepnumber=1,
+  numbersep=5pt,                  % how far the line-numbers are from the code
+  showspaces=false,               % show spaces adding particular underscores
+  showstringspaces=false,         % underline spaces within strings
+  showtabs=false,                 % show tabs within strings adding particular underscores
+  frame=none,                   % adds a frame around the code
+  rulecolor=\color{black},        % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. commens (green here))
+  tabsize=2,                      % sets default tabsize to 2 spaces
+  captionpos=b,                   % sets the caption-position to bottom
+  breaklines=true,                % sets automatic line breaking
+  breakatwhitespace=false,        % sets if automatic breaks should only happen at whitespace
+  title=\lstname,                   % show the filename of files included with \lstinputlisting;
+                                  % also try caption instead of title  
+  commentstyle=\color{gray}\upshape
+}
+
+
+\lstdefinelanguage{XML}
+{
+  morestring=[s][\color{mauve}]{"}{"},
+  morestring=[s][\color{black}]{>}{<},
+  morecomment=[s]{<?}{?>},
+  morecomment=[s][\color{dkgreen}]{<!--}{-->},
+  stringstyle=\color{black},
+  identifierstyle=\color{newblue},
+  keywordstyle=\color{red},
+  morekeywords={xmlns,xsi,noNamespaceSchemaLocation,type,id,x,y,source,target,version,tool,transRef,roleRef,objective,eventually},
+  backgroundcolor=\color{background}
+  % list your attributes here
+}
+
+\lstdefinelanguage{csharp}
+{
+captionpos=b,
+%numbers=left, %Nummerierung
+%numberstyle=\tiny, % kleine Zeilennummern
+frame=lines, % Oberhalb und unterhalb des Listings ist eine Linie
+showspaces=false,
+showtabs=false,
+breaklines=true,
+showstringspaces=false,
+breakatwhitespace=true,
+escapeinside={(*@}{@*)},
+commentstyle=\color{greencomments},
+morekeywords={partial, var, value, get, set},
+keywordstyle=\color{bluekeywords},
+stringstyle=\color{redstrings},
+basicstyle=\ttfamily\footnotesize,
+backgroundcolor=\color{background},
+}
+
+\lstdefinelanguage{java}
+{
+captionpos=b,
+%numbers=left, %Nummerierung
+%numberstyle=\tiny, % kleine Zeilennummern
+frame=lines, % Oberhalb und unterhalb des Listings ist eine Linie
+showspaces=false,
+showtabs=false,
+breaklines=true,
+showstringspaces=false,
+breakatwhitespace=true,
+escapeinside={(*@}{@*)},
+commentstyle=\color{greencomments},
+morekeywords={partial, var, value, get, set},
+keywordstyle=\color{bluekeywords},
+stringstyle=\color{redstrings},
+basicstyle=\ttfamily\footnotesize,
+backgroundcolor=\color{background},
+}
+
+\lstdefinelanguage{python}
+{
+captionpos=b,
+%numbers=left, %Nummerierung
+%numberstyle=\tiny, % kleine Zeilennummern
+frame=lines, % Oberhalb und unterhalb des Listings ist eine Linie
+showspaces=false,
+showtabs=false,
+breaklines=true,
+showstringspaces=false,
+breakatwhitespace=true,
+escapeinside={(*@}{@*)},
+commentstyle=\color{greencomments},
+morekeywords={partial, var, value, get, set},
+keywordstyle=\color{bluekeywords},
+stringstyle=\color{redstrings},
+basicstyle=\ttfamily\footnotesize,
+backgroundcolor=\color{background},
+}
+
+\lstdefinelanguage{javascript}
+{
+captionpos=b,
+%numbers=left, %Nummerierung
+%numberstyle=\tiny, % kleine Zeilennummern
+frame=lines, % Oberhalb und unterhalb des Listings ist eine Linie
+showspaces=false,
+showtabs=false,
+breaklines=true,
+showstringspaces=false,
+breakatwhitespace=true,
+escapeinside={(*@}{@*)},
+commentstyle=\color{greencomments},
+morekeywords={partial, var, value, get, set},
+keywordstyle=\color{bluekeywords},
+stringstyle=\color{redstrings},
+basicstyle=\ttfamily\footnotesize,
+backgroundcolor=\color{background},
+}
+
+\lstdefinelanguage{go}
+{
+captionpos=b,
+%numbers=left, %Nummerierung
+%numberstyle=\tiny, % kleine Zeilennummern
+frame=lines, % Oberhalb und unterhalb des Listings ist eine Linie
+showspaces=false,
+showtabs=false,
+breaklines=true,
+showstringspaces=false,
+breakatwhitespace=true,
+escapeinside={(*@}{@*)},
+commentstyle=\color{greencomments},
+morekeywords={partial, var, value, get, set},
+keywordstyle=\color{bluekeywords},
+stringstyle=\color{redstrings},
+basicstyle=\ttfamily\footnotesize,
+backgroundcolor=\color{background},
+}
+
+\interdisplaylinepenalty=2500
+\footnotesize 
+\setcounter{totalnumber}{3}
+\renewcommand{\textfraction}{0.2}
+
+\topmargin          -18mm      % required margin - 1 inch (25.4mm)
+\textheight         254mm
+\oddsidemargin      -10.4mm     % required margin - 1 inch (25.4mm)
+\evensidemargin     -10.4mm     % required margin - 1 inch (25.4mm)
+\textwidth          179.8mm
+\columnsep          4.2mm
+\parindent          3.8mm
+\parskip            1ex
+
+%Can push \textheight  to 258
+
+%-------------------------------------------------------------------------
+%Fonts
+%-------------------------------------------------------------------------
+\font\rmx=cmr10
+\font\rmxii=cmr10 at 12pt
+\font\rmxiv=cmr17 at 14pt
+\newcommand{\email}[1]{{\fontfamily{cmtt}\selectfont#1\normalfont}}
+
+%\IEEEoverridecommandlockouts
+
+\begin{document}
+
+\title{Making Things Work and Look Good in Latex\vspace{-1cm}}
+
+\author{\IEEEauthorblockN{Brent Shaw, Not Brent}
+\IEEEauthorblockA{\emph{Department of Computer Science, Rhodes University, Grahamstown 6139, South Africa}\\
+$^1$\email{g09s2665@campus.ru.ac.za}, $^2$\email{n.brent@ru.ac.za}\\
+}}
+
+\maketitle
+
+\begin{multicols}{2}
+
+\begin{abstract}
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+\end{abstract}
+
+\begin{IEEEkeywords}
+ipsum, dolor, sit, amet
+\end{IEEEkeywords}
+
+\section{Basics}
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+
+Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+
+\section{Figures}
+
+\subsection{Wide}
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+
+
+\end{multicols}
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.9]{wide-colour.png}
+\caption{Caption for Wide \textit{Colour} figure}
+\label{network}
+\end{figure}
+
+\begin{multicols}{2} 
+
+\begin{figure*}
+\centering
+\includegraphics[scale=0.9]{wide-colour.png}
+\caption{Caption for Wide \textit{Colour} figure}
+\label{network}
+\end{figure*}
+
+\newpage
+
+Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.9]{colour.png}
+\caption{Caption for Large \textit{Colour} figure}
+\label{network}
+\end{figure}
+
+Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+
+\subsection{Side by side}
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
+
+\begin{figure}[H]
+\centering
+\subfloat[\textit{Black and white} figure]{\includegraphics[scale=0.5]{blackandwhite.png}}
+\qquad
+\subfloat[\textit{Monochrome} figure]{\includegraphics[scale=0.5]{monochrome.png}}
+\caption{Side-by-side non-colour figures}
+\label{scen}
+\end{figure}
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
+
+Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+
+Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+
+Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+
+\section{Tables}
+
+\begin{tabular}{ |p{2.5cm}||p{1cm}|p{3cm}| }
+ \hline
+ \multicolumn{3}{|c|}{Country List} \\
+ \hline
+ Country Name & Index & ISO numeric Code\\
+ \hline
+ Afghanistan & 1 & 004\\
+ Aland Islands & 2 & 248\\
+ Albania & 1 & 008\\
+ Algeria & 3 & 012\\
+ Samoa & 5 & 016\\
+ Andorra & 4 & 020\\
+ Angola & 4 & 024\\
+ \hline
+\end{tabular}
+
+
+
+
+\subsection{Tabu tables}
+
+\taburowcolors[2] 2{tableLineOne .. tableLineTwo}
+\tabulinesep = ^4mm_3mm
+\everyrow{\tabucline[.4mm  white]{}}
+
+\begin{tabu}{l >{\bfseries}X[r, 1] X[4] l}
+\tableHeaderStyle
+& Header & Description & \\
+& Thing & Something that describes the thing & \\
+& Antoher & Just more descriptions & \\
+\end{tabu}
+
+\subsection{Tabularx tables}
+
+
+\begin{tabularx}{0.46\textwidth}{XX}
+\arrayrulecolor{delim}\hline
+\textbf{\textcolor{delim}{Goal 1 Eradicate Extreme Poverty}} & \\
+\hline
+Target 1.A Halve, between 1990 and 2015, the proportion of the people whose income is less than \$1 a day. & 
+\begin{minipage}[t]{\linewidth}%
+\begin{itemize}
+\item[1.1] Proportion of population below \$1 purchasing power parity (PPP) a day$^a$
+\end{itemize} 
+\end{minipage}\\
+\end{tabularx}
+
+\newpage
+\section{Code Listings}
+\label{Listings}
+
+
+Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
+
+Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+
+\begin{lstlisting}[language=json, xleftmargin=2em, frame=single,framexleftmargin=1.5em, firstnumber=1,caption={Example of JSON listing},label={json:tank},captionpos=b,escapechar=|]
+"tank1": {
+    "value": 1000, |\label{tank:line:value}|
+    "fault": 0, |\label{tank:line:fault}|
+    "trend": -1, |\label{tank:line:trend}|
+    "default": 1, |\label{tank:line:default}|
+\end{lstlisting}
+\label{gen}
+
+\begin{lstlisting}[language=xml, xleftmargin=2em, frame=single,framexleftmargin=1.5em, firstnumber=1,caption={Example XML listing},label={json:plc},captionpos=b,escapechar=|]
+<note>
+  <to>Tove</to>
+  <from>Jani</from>
+  <heading>Reminder</heading>
+  <body>Don't forget me this weekend!</body>
+</note>
+\end{lstlisting}
+
+\begin{lstlisting}[language=docker, xleftmargin=2em, frame=single,framexleftmargin=1.5em, firstnumber=1, caption={Example Dockerfile}, breaklines=true, label={code:docker},label={list:docker},captionpos=b,escapechar=|]
+FROM python:3.5
+WORKDIR /app
+ADD . /app
+RUN pip install -r requirements.txt
+EXPOSE 502 |\label{docker:line:port}|
+CMD ["python", "sensor1.py"] |\label{docker:line:script}|
+\end{lstlisting}
+
+\begin{lstlisting}[language=docker-compose-3, xleftmargin=2em, frame=single,framexleftmargin=1.5em, firstnumber=1, caption={Example Docker-compose script}, breaklines=true, label={list:compose},captionpos=b,escapechar=|]
+version: '3'
+services:
+    plc:
+        build: plc/.
+        networks:
+          - modbus-net
+    sensor1:
+        build: sensor1/.
+        networks:
+          - modbus-net
+        depends_on:
+          - "plc"
+\end{lstlisting}
+
+\begin{lstlisting}[language=C,style=c, xleftmargin=2em, frame=single,framexleftmargin=1.5em, firstnumber=1, caption={Example C: Hello world!}, breaklines=true, label={list:compose},captionpos=b,escapechar=|]
+#include <one.hpp>
+#include <iostream>
+
+int main()
+{
+    cout << string("Hello world!") << endl;
+    return 0;
+}
+\end{lstlisting}
+
+\begin{lstlisting}[language=C,style=c, xleftmargin=2em, frame=single,framexleftmargin=1.5em, firstnumber=1, caption={Example C++: Hello world!}, breaklines=true, label={list:compose},captionpos=b,escapechar=|]
+#include <one.hpp>
+#include <iostream>
+
+int main()
+{
+    cout << string("Hello world!") << endl;
+    return 0;
+}
+\end{lstlisting}
+
+\begin{lstlisting}[language=csharp, xleftmargin=2em, frame=single,framexleftmargin=1.5em, firstnumber=1, caption={Example C\#: Hello world!}, breaklines=true, label={list:compose},captionpos=b,escapechar=|]
+using System;
+
+public class Program
+{
+    static public void Main(string[] args)
+    {
+        Console.WriteLine("Hello world!");
+    }
+}
+\end{lstlisting}
+
+\begin{lstlisting}[language=java, xleftmargin=2em, frame=single,framexleftmargin=1.5em, firstnumber=1, caption={Example Java: Hello world!}, breaklines=true, label={list:compose},captionpos=b,escapechar=|]
+class Program {
+    public static void main(String[] args) throws Exception {
+        System.out.println("Hello world!");
+    }
+}
+\end{lstlisting}
+
+\begin{lstlisting}[language=go, xleftmargin=2em, frame=single,framexleftmargin=1.5em, firstnumber=1, caption={Example GoLang: Hello world!}, breaklines=true, label={list:compose},captionpos=b,escapechar=|]
+package main
+
+import "fmt"
+
+func main() {
+    fmt.Println("Hello world!")
+}
+\end{lstlisting}
+
+
+\begin{lstlisting}[language=javascript, xleftmargin=2em, frame=single,framexleftmargin=1.5em, firstnumber=1, caption={Example JavaScript: Hello world!}, breaklines=true, label={list:compose},captionpos=b,escapechar=|]
+console.log("Hello world!");
+\end{lstlisting}
+
+
+\begin{lstlisting}[language=python, xleftmargin=2em, frame=single,framexleftmargin=1.5em, firstnumber=1, caption={Example Python: Hello world!}, breaklines=true, label={list:compose},captionpos=b,escapechar=|]
+print "Hello world!"
+\end{lstlisting}
+
+\newpage
+\section{Links, citations and references}
+
+
+
+\subsection{References}
+ All reference items must be in 8 pt font. Number the reference items consecutively in square brackets (e.g.~\cite{Metev:1998}).
+
+Examples of reference items of different categories shown in the References section include:
+\begin{itemize}
+  \item example of a book in \cite{Metev:1998}
+  \item example of a book in a series in \cite{Breckling:1989}
+  \item example of a journal article in \cite{Zhang:1999}
+  \item example of a conference paper in \cite{Wegmuller:2000}
+  \item example of a patent in \cite{Sorace:1997}
+  \item example of a website in \cite{IEEE:website}
+  \item example of a web page in \cite{CTAN:webpage}
+  \item example of a manual in \cite{Motorola:1996}
+  \item example of a datasheet in \cite{PDCA12-70}
+  \item example of a master’s thesis in \cite{Karnik:1999}
+  \item example of a technical report in \cite{Padyhe:1999}
+  \item example of a standard in \cite{IEEE:802.11}
+\end{itemize}
+
+When referring to a reference item, use the reference number \cite{Breckling:1989}.  Do not use ''Ref.~\cite{Zhang:1999}'' or ''Reference~\cite{Zhang:1999}'', except at the beginning of a sentence, e.g.  ''Reference~\cite{Zhang:1999} shows \ldots''.  Members of a reference list are each numbered with separate brackets (e.g. \cite{Breckling:1989}, \cite{Zhang:1999}, \cite{Wegmuller:2000}–--\cite{IEEE:website}).
+
+\section{Mathematical Expressions}
+
+Mathematical expressions are centered within a column. For very large equations, the expression may span both columns, but must then be positioned at the top or bottom of a page. All mathematical expressions must be numbered within round brackets, in line with the expression and right-justified. Use \eqref{eq: Binomial Theorem} as the labelling convention to reference the following example expression:
+
+\begin{equation}\label{eq: Binomial Theorem}
+(x+a)^n=\int_{k=0}^n\binom{n}{k}x^k a^{n-k}
+\end{equation}
+
+\section{Splitting up Large Files}
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.   
+
+\section{Conclusion}
+%
+Due to the rise in interconnected infrastructure and the proliferation of low-cost IP enabled devices, the need for research into ICS security deepens. The use of testbeds as a means of investigating ICS provides researchers with a method through which the interaction between different pieces of industrial hardware or software can be monitored. The high monetary cost of setting up physical testbeds and the low level of reconfigurability of such systems leads to a need for highly configurable hybrid testbeds.
+
+This paper introduced a networking and traffic generation platform that will be used in the future development of an IoT and ICS testbed. Through the modelling and simulation of simple ICS, a system was created that allows for an ICS configuration to be tested and subsequently converted into a Docker container-based system for virtualising critical infrastructure.
+
+While currently a proof-of-concept, the system shows the potential to provide researchers with a scriptable framework ICS simulation, with the ability to attach physical devices and networks. The testbed ultimately aims to enable researchers to virtualise entire networks or industrial installations.
+
+\section*{Acknowledgment}
+This work was undertaken in the Distributed Multimedia CoE at Rhodes University, with financial support from Telkom SA and Coriant. The authors acknowledge that opinions, findings and conclusions or recommendations expressed here are those of the author(s) and that none of the above-mentioned sponsors accept liability whatsoever in this regard.
+
+
+\bibliographystyle{IEEEtran}
+\bibliography{example}
+
+\end{multicols}
+
+\vspace{-0.8cm}
+
+\begin{IEEEbiographynophoto}{Brent Shaw}
+is a PhD candidate with the Department of Computer Science at Rhodes University. Part of the Security and Networks Research Group (SNRG), he is conducting research into the security of Industrial Control Systems. 
+\end{IEEEbiographynophoto}
+
+
+\vfill
+
+\end{document}
